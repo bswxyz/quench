@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<script>
+  document.documentElement.classList.add('js');
+  try { var t = localStorage.getItem('quench-theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+</script>
+<title>How Quench was built — Parable build guide</title>
+<meta name="description" content="A build guide for Quench: the idea, the stack, the raw-WebGL Damascus domain-warp shader, the details that matter, and how to ship it on GitHub Pages." />
+<meta name="robots" content="index,follow" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  .doc { width: min(100% - 2.4rem, 820px); margin: 2rem auto 5rem; }
+  .doc-back { display: inline-flex; align-items: center; gap: .4rem; color: var(--dim); text-decoration: none; font-size: .86rem; margin-bottom: 1.6rem; }
+  .doc-back:hover { color: var(--ink); }
+  .doc h1 { font-size: clamp(2.2rem, 5vw, 3.4rem); margin: .4rem 0 .3rem; }
+  .doc .lede { margin-bottom: 2.4rem; }
+  .doc h2 { font-size: clamp(1.4rem, 3vw, 1.9rem); margin: 2.6rem 0 .6rem; }
+  .doc p { color: var(--dim); margin: .7rem 0; }
+  .doc p strong { color: var(--ink); font-weight: 600; }
+  .doc ul { color: var(--dim); padding-left: 1.1rem; margin: .7rem 0; }
+  .doc li { margin: .35rem 0; }
+  .doc a.inl { color: var(--accent); }
+  pre { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 1rem 1.1rem; overflow-x: auto; margin: 1rem 0; }
+  code { font-family: var(--font-m); font-size: .82rem; }
+  pre code { color: var(--ink); line-height: 1.6; }
+  .tag-row { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1.2rem 0; }
+  .tag-row span { font-family: var(--font-m); font-size: .72rem; padding: .3rem .6rem; border: 1px solid var(--line); border-radius: 999px; color: var(--dim); }
+  .callout { border-left: 3px solid var(--accent); background: color-mix(in oklab, var(--accent) 6%, transparent); padding: .9rem 1.1rem; border-radius: 0 10px 10px 0; margin: 1.4rem 0; }
+  .callout p { margin: 0; color: var(--ink); }
+</style>
+</head>
+<body>
+<div class="film" aria-hidden="true"></div>
+<main class="doc">
+  <a class="doc-back" href="../">← Back to Quench</a>
+  <p class="eyebrow mono">[ Parable build guide ]</p>
+  <h1>How Quench was built</h1>
+  <p class="lede">A one-smith forge, rendered without a forge. The signature is a
+    <strong>domain-warped fragment shader</strong> that paints pattern-welded Damascus into a
+    clipped blade — no textures, no libraries, ~90 lines of GLSL.</p>
+
+  <div class="tag-row">
+    <span>static · no build step</span><span>raw WebGL</span><span>Marcellus / Inter / Space Mono</span><span>light + dark</span><span>reduced-motion aware</span>
+  </div>
+
+  <h2>The idea</h2>
+  <p>Damascus steel sells itself on one thing: the pattern, where no two blades are alike. A hero
+    image would freeze that into a single photo. A shader keeps it <em>alive</em> — the fold drifting
+    slowly, a specular highlight sweeping the bevel — so the promise ("no two leave the shop alike")
+    is something you watch happen, not just read.</p>
+
+  <h2>The stack</h2>
+  <p>Deliberately plain. One <code>index.html</code>, one <code>styles.css</code>, one
+    <code>main.js</code>. No framework, no bundler, no CDN — even the shader is hand-rolled WebGL so
+    the page has zero runtime dependencies and ships straight to GitHub Pages. Type is Marcellus
+    (a lapidary serif with the right heritage weight), Inter for body, Space&nbsp;Mono for the
+    technical meta that runs through a smith's world (temperatures, steel grades, plate numbers).</p>
+
+  <h2>Signature technique — the Damascus shader</h2>
+  <p>Pattern-welded steel is layers of two alloys folded over and over. Etched, the softer layer
+    recedes and the fold surfaces as light and dark. We fake exactly that with <strong>domain
+    warping</strong>: sample fbm noise, use that to distort the coordinates you feed into more fbm,
+    then run the warped field through a hard <code>sin()</code> to snap it into bands — the folds.</p>
+  <pre><code>// inside the fragment shader
+vec2 q = vec2(fbm(p + t*0.03), fbm(p + 5.2));
+vec2 r = vec2(fbm(p + 3.4*q + 1.7), fbm(p + 3.4*q + 8.3));
+float f = fbm(p + 2.6*r);
+float bands = sin((r.x*2.0 + f*3.0) * 22.0);   // the fold, as light & dark
+bands = smoothstep(-0.15, 0.15, bands);</code></pre>
+  <p>The canvas is then clipped to a blade with a CSS <code>clip-path</code> polygon, so the steel
+    lives inside the silhouette instead of a rectangle. A faint warm gradient low-and-right hints at
+    quench heat still in the metal.</p>
+
+  <h2>Details that matter</h2>
+  <ul>
+    <li><strong>Cost, not vanity.</strong> The loop runs at ~30fps, device-pixel-ratio is capped at
+      1.5, and fbm is five octaves — the pattern drifts slowly, so none of that is visible, and the
+      GPU stays cool.</li>
+    <li><strong>It pauses when unseen.</strong> An <code>IntersectionObserver</code> stops the render
+      loop the moment the blade scrolls out of view.</li>
+    <li><strong>Reduced motion draws one frame.</strong> Under <code>prefers-reduced-motion</code>
+      the shader renders a single, fully-etched still and every reveal/counter resolves instantly.</li>
+    <li><strong>Content is never hidden without JS.</strong> The hero rise and scroll reveals are
+      gated behind an <code>.js</code> class set synchronously in <code>&lt;head&gt;</code> — kill
+      JavaScript and the page is fully legible.</li>
+    <li><strong>The colour-coded forge.</strong> Each process step carries a <code>data-heat</code>;
+      JS paints its left rail that temperature, so the section reads like a heat chart, dull-cherry
+      up to welding white.</li>
+  </ul>
+
+  <div class="callout"><p>The commission form is a demo — it validates and confirms in-place but sends
+    nothing. Wire it to your own endpoint (Formspree, a serverless function, an email service) before
+    taking real orders.</p></div>
+
+  <h2>Ship it on GitHub Pages</h2>
+  <p>Nothing to build. Push the folder and point Pages at the root.</p>
+  <pre><code>gh repo create bswxyz/quench --public --source . --push
+gh api --method POST /repos/bswxyz/quench/pages -f 'source[branch]=main' -f 'source[path]=/'</code></pre>
+  <p>Relative paths and a <code>.nojekyll</code> file mean it serves from the project subpath without
+    a single config change. That's the whole point of the Formwork-style static build.</p>
+
+  <a class="doc-back" href="../" style="margin-top:2.6rem">← Back to Quench</a>
+</main>
+</body>
+</html>

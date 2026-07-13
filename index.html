@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<script>
+  document.documentElement.classList.add('js');
+  try { var t = localStorage.getItem('quench-theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+</script>
+<title>Quench — hand-forged blades &amp; heritage tools</title>
+<meta name="description" content="Quench is a one-smith forge making Damascus kitchen knives, splitting axes and garden tools by hand. Pattern-welded steel, no two alike, quenched in the same oil since 1974." />
+<meta name="theme-color" content="#131211" />
+<meta name="color-scheme" content="dark light" />
+<meta property="og:title" content="Quench — hand-forged blades &amp; heritage tools" />
+<meta property="og:description" content="Pattern-welded Damascus, forged one at a time. No two alike. Quenched in the same oil since 1974." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+<div class="film" aria-hidden="true"></div>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav">
+  <a class="brand" href="./" aria-label="Quench home">
+    <svg class="brand-mark" viewBox="0 0 28 28" aria-hidden="true" focusable="false">
+      <path d="M4 22 L20 6 Q24 4 24 8 L10 24 Q6 26 4 22 Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M8 20 L18 10" stroke="currentColor" stroke-width="1.2" opacity=".5"/>
+    </svg>
+    <span class="brand-word">Quench</span>
+  </a>
+  <nav class="nav-links" aria-label="Primary">
+    <a href="#forge">The forge</a>
+    <a href="#tools">The tools</a>
+    <a href="#smith">The smith</a>
+    <a href="./guide/">Guide</a>
+    <a class="nav-cta" href="#commission">Commission</a>
+    <button id="themeBtn" class="theme-btn" type="button" aria-pressed="true" aria-label="Switch to light mode" title="Toggle light / dark">
+      <svg class="ico-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><g stroke-linecap="round"><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></g></svg>
+      <svg class="ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/></svg>
+    </button>
+  </nav>
+</header>
+
+<main id="main">
+
+  <!-- ============ hero — Damascus blade shader ============ -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow mono">[ Est. 1974 · one smith · one anvil ]</p>
+        <h1 id="hero-title" class="hero-title">
+          <span class="line"><span>Forged once.</span></span>
+          <span class="line"><span>Folded <em>a&nbsp;hundred</em></span></span>
+          <span class="line"><span>times.</span></span>
+        </h1>
+        <p class="hero-sub">Pattern-welded Damascus kitchen knives, splitting axes and garden tools —
+          drawn out, folded, welded and quenched by hand. The pattern is the proof: no two blades
+          leave the shop alike.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#tools">See the tools</a>
+          <a class="btn btn-ghost" href="#forge">How it's made →</a>
+        </div>
+        <dl class="hero-facts">
+          <div><dt class="mono">Layers</dt><dd><span class="c-num" data-to="256">0</span></dd></div>
+          <div><dt class="mono">Quench oil</dt><dd>same since '74</dd></div>
+          <div><dt class="mono">Made per year</dt><dd><span class="c-num" data-to="140">0</span></dd></div>
+        </dl>
+      </div>
+
+      <figure class="blade-fig" aria-labelledby="blade-cap">
+        <div class="blade-clip">
+          <canvas id="damascus" class="damascus" aria-hidden="true"></canvas>
+          <div class="blade-noise" aria-hidden="true"></div>
+        </div>
+        <span class="blade-edge" aria-hidden="true"></span>
+        <figcaption id="blade-cap" class="blade-cap mono">
+          <span>PLATE 01 — “nightfall” pattern</span>
+          <span>1080 &amp; 15N20 · 256 layers</span>
+        </figcaption>
+      </figure>
+    </div>
+    <p class="hero-scroll mono" aria-hidden="true">scroll — into the fire</p>
+  </section>
+
+  <!-- ============ the forge — process steps ============ -->
+  <section id="forge" class="forge">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="kicker mono reveal">[ The forge ]</p>
+        <h2 class="reveal">Five heats, one blade.</h2>
+        <p class="lede reveal">A knife is not cut from a bar. It is <em>persuaded</em> out of one —
+          each step a colour of heat, each colour a temperature you learn by eye before you learn by
+          thermometer.</p>
+      </div>
+
+      <ol class="steps" id="steps">
+        <li class="step reveal" data-heat="#7a4a2a">
+          <span class="step-no mono">01</span>
+          <div class="step-body">
+            <h3>Draw out</h3>
+            <p>The billet is heated to a dull cherry and hammered long — the first commitment. Get the
+              taper wrong here and every later heat inherits the mistake.</p>
+            <span class="step-heat mono">≈ 850 °C — dull cherry</span>
+          </div>
+        </li>
+        <li class="step reveal" data-heat="#b5541c">
+          <span class="step-no mono">02</span>
+          <div class="step-body">
+            <h3>Fold &amp; weld</h3>
+            <p>1080 and 15N20 are stacked, brought to welding heat and folded — seven folds doubles to
+              two hundred and fifty-six layers. Flux keeps the scale out of the seam.</p>
+            <span class="step-heat mono">≈ 1300 °C — near white</span>
+          </div>
+        </li>
+        <li class="step reveal" data-heat="#e07a22">
+          <span class="step-no mono">03</span>
+          <div class="step-body">
+            <h3>Shape</h3>
+            <p>Profile, bevels, tang. The pattern is still hidden — it lives in the layers, waiting for
+              acid to bring it up. Filework goes on the spine while the steel is still soft.</p>
+            <span class="step-heat mono">≈ 950 °C — orange</span>
+          </div>
+        </li>
+        <li class="step reveal step--quench" data-heat="#ff7a2f">
+          <span class="step-no mono">04</span>
+          <div class="step-body">
+            <h3>Quench</h3>
+            <p>The heat that names the shop. Non-magnetic, then straight into warm oil — a hiss, a
+              plume, and the steel locks hard in under two seconds. This is where blades are won or cracked.</p>
+            <span class="step-heat mono">≈ 815 °C → oil, ~50 °C</span>
+          </div>
+        </li>
+        <li class="step reveal" data-heat="#6f7c86">
+          <span class="step-no mono">05</span>
+          <div class="step-body">
+            <h3>Temper &amp; etch</h3>
+            <p>Two low bakes pull the brittleness back out. Then a bath of dilute acid eats the softer
+              layers a fraction faster — and the hundred folds finally surface as light and shadow.</p>
+            <span class="step-heat mono">≈ 200 °C — straw</span>
+          </div>
+        </li>
+      </ol>
+
+      <div class="heat-rail" aria-hidden="true">
+        <div class="heat-bar"><i id="heatFill"></i></div>
+        <span class="heat-lbl mono">cold</span>
+        <span class="heat-lbl heat-lbl--hot mono">welding heat</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ the tools — catalog ============ -->
+  <section id="tools" class="tools">
+    <span class="wm" aria-hidden="true">DAMASCUS</span>
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="kicker mono reveal">[ The tools ]</p>
+        <h2 class="reveal">Made to outlive you.</h2>
+        <p class="lede reveal">Six things worth keeping. Everything is full-tang, hand-finished and
+          stamped with its plate number. Re-grinds are free, for as long as the shop stands.</p>
+      </div>
+
+      <div class="tool-grid">
+        <article class="tool reveal">
+          <div class="tool-art"><svg viewBox="0 0 200 120" aria-hidden="true" focusable="false">
+            <path class="pat" d="M18 74 Q90 40 176 58 L182 66 Q96 58 24 84 Z"/>
+            <path d="M176 58 L182 66 M18 74 L24 84" stroke="var(--edge)" stroke-width="1.5" fill="none"/>
+            <rect x="176" y="54" width="10" height="18" rx="2" transform="rotate(9 181 63)" fill="var(--brass)"/>
+            <path d="M182 62 L212 70 Q220 72 218 78 L188 74 Z" fill="var(--handle)"/>
+          </svg></div>
+          <div class="tool-info">
+            <div class="tool-top"><h3>Chef 210</h3><span class="tool-price mono">£420</span></div>
+            <p class="tool-spec mono">1080/15N20 · 61 HRC · stabilised walnut</p>
+            <p class="tool-note">The one that lives on the block. Thin behind the edge, heavy where it counts.</p>
+            <span class="tool-tag tag--ok mono">2–3 wk lead</span>
+          </div>
+        </article>
+
+        <article class="tool reveal">
+          <div class="tool-art"><svg viewBox="0 0 200 120" aria-hidden="true" focusable="false">
+            <path class="pat" d="M60 20 Q118 26 150 60 Q120 96 60 100 L52 60 Z"/>
+            <path d="M52 60 L150 60" stroke="var(--edge)" stroke-width="1.4" opacity=".6"/>
+            <rect x="36" y="52" width="22" height="16" rx="3" fill="var(--handle)"/>
+            <path d="M20 54 L38 54 L38 66 L20 66 Q14 60 20 54 Z" fill="var(--handle)"/>
+          </svg></div>
+          <div class="tool-info">
+            <div class="tool-top"><h3>Splitting Axe</h3><span class="tool-price mono">£560</span></div>
+            <p class="tool-spec mono">forged eye · hickory haft · linseed cured</p>
+            <p class="tool-note">A convex cheek that pops rounds without burying. Sharpened to split, not shave.</p>
+            <span class="tool-tag tag--low mono">made to order</span>
+          </div>
+        </article>
+
+        <article class="tool reveal">
+          <div class="tool-art"><svg viewBox="0 0 200 120" aria-hidden="true" focusable="false">
+            <path class="pat" d="M22 70 Q86 52 150 64 L156 70 Q92 60 26 78 Z"/>
+            <path d="M150 64 L156 70" stroke="var(--edge)" stroke-width="1.4" fill="none"/>
+            <path d="M156 66 L190 72 Q198 74 196 80 L162 76 Z" fill="var(--handle)"/>
+            <circle cx="188" cy="76" r="2.4" fill="var(--brass)"/>
+          </svg></div>
+          <div class="tool-info">
+            <div class="tool-top"><h3>Paring 90</h3><span class="tool-price mono">£190</span></div>
+            <p class="tool-spec mono">1080/15N20 · 62 HRC · bog oak</p>
+            <p class="tool-note">Small, nimble, absurdly sharp. The knife you reach for without thinking.</p>
+            <span class="tool-tag tag--ok mono">in stock</span>
+          </div>
+        </article>
+
+        <article class="tool reveal">
+          <div class="tool-art"><svg viewBox="0 0 200 120" aria-hidden="true" focusable="false">
+            <path class="pat" d="M30 40 L150 40 L150 78 Q150 92 136 92 L44 92 Q30 92 30 78 Z"/>
+            <path d="M30 78 L150 78" stroke="var(--edge)" stroke-width="1.4" opacity=".6"/>
+            <path d="M150 52 L186 58 Q194 60 192 66 L156 62 Z" fill="var(--handle)"/>
+          </svg></div>
+          <div class="tool-info">
+            <div class="tool-top"><h3>Cleaver</h3><span class="tool-price mono">£480</span></div>
+            <p class="tool-spec mono">5mm spine · full flat · ebony scales</p>
+            <p class="tool-note">Bone, squash, everything. A blade with opinions and the mass to enforce them.</p>
+            <span class="tool-tag tag--soon mono">restocks aug</span>
+          </div>
+        </article>
+
+        <article class="tool reveal">
+          <div class="tool-art"><svg viewBox="0 0 200 120" aria-hidden="true" focusable="false">
+            <path class="pat" d="M40 30 Q70 60 40 90 Q100 84 150 60 Q100 36 40 30 Z"/>
+            <path d="M150 60 L182 66 Q190 68 188 74 L156 70 Z" fill="var(--handle)"/>
+          </svg></div>
+          <div class="tool-info">
+            <div class="tool-top"><h3>Hori-Hori</h3><span class="tool-price mono">£150</span></div>
+            <p class="tool-spec mono">garden knife · half-serrated · oiled ash</p>
+            <p class="tool-note">Dig, cut, weed, plant. The tool the shop uses to prove Damascus isn't precious.</p>
+            <span class="tool-tag tag--ok mono">in stock</span>
+          </div>
+        </article>
+
+        <article class="tool reveal">
+          <div class="tool-art"><svg viewBox="0 0 200 120" aria-hidden="true" focusable="false">
+            <path class="pat" d="M24 60 Q100 30 178 52 L182 60 L178 68 Q100 90 24 60 Z"/>
+            <path d="M100 44 L100 76" stroke="var(--edge)" stroke-width="1.2" opacity=".4"/>
+          </svg></div>
+          <div class="tool-info">
+            <div class="tool-top"><h3>Bar Stock</h3><span class="tool-price mono">£95<span class="mono">/bar</span></span></div>
+            <p class="tool-spec mono">forged Damascus billet · 200×40×6mm</p>
+            <p class="tool-note">For the makers. Etched to show the pattern, ready for your own handles.</p>
+            <span class="tool-tag tag--ok mono">in stock</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ the smith — story ============ -->
+  <section id="smith" class="smith">
+    <div class="wrap smith-grid">
+      <div class="smith-copy">
+        <p class="kicker mono reveal">[ The smith ]</p>
+        <h2 class="reveal">One anvil. Fifty&nbsp;winters.</h2>
+        <p class="reveal">My grandfather quenched farm tools in a bucket of oil behind this same shed.
+          The oil has been topped up, never changed — there's fifty years of steel in it, and I'd swear
+          it bites a little truer for it. That's not metallurgy. That's just what I believe.</p>
+        <p class="reveal">I make around a hundred and forty pieces a year, which is as many as one pair of
+          hands can make well. When I'm buried in orders I don't hire — I just make you wait. A knife
+          you'll own for forty years can afford to take three weeks.</p>
+        <p class="reveal">Everything is stamped, numbered and logged in the same ledger my grandfather
+          started. Send a tired blade back and I'll re-grind it, re-handle it, and log the date. The
+          shop remembers every tool it's ever made.</p>
+        <p class="smith-sign">— R. Thorne, since 1974</p>
+      </div>
+      <aside class="smith-card reveal" aria-label="Shop facts">
+        <div class="sc-row"><span class="mono">Founded</span><span>1974</span></div>
+        <div class="sc-row"><span class="mono">Steel</span><span>1080 / 15N20</span></div>
+        <div class="sc-row"><span class="mono">Hardness</span><span>61–62 HRC</span></div>
+        <div class="sc-row"><span class="mono">Made / yr</span><span>~140</span></div>
+        <div class="sc-row"><span class="mono">Re-grinds</span><span>free, forever</span></div>
+        <div class="sc-row"><span class="mono">Guarantee</span><span>the maker's life</span></div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============ commission ============ -->
+  <section id="commission" class="commission">
+    <div class="wrap comm-grid">
+      <div class="comm-info">
+        <p class="kicker kicker--fire mono reveal">[ Commission ]</p>
+        <h2 class="reveal">Tell me what you cut.</h2>
+        <p class="comm-sub reveal">Every commission starts with a conversation, not a catalogue. What
+          you cook, what you split, the size of your hand. I'll draw it, quote it, and put you in the book.</p>
+        <ul class="comm-list mono">
+          <li>Deposit holds your place — balance on completion</li>
+          <li>Photos at every heat if you want them</li>
+          <li>2–8 week lead depending on the queue</li>
+        </ul>
+      </div>
+      <div class="comm-form reveal" aria-live="polite">
+        <form id="commForm" novalidate>
+          <div class="field">
+            <label class="mono" for="cName">Name</label>
+            <input id="cName" name="name" type="text" required autocomplete="name" placeholder="Your name" />
+          </div>
+          <div class="field">
+            <label class="mono" for="cEmail">Email</label>
+            <input id="cEmail" name="email" type="email" required autocomplete="email" placeholder="you@example.com" />
+          </div>
+          <div class="field">
+            <label class="mono" for="cWhat">What should it do?</label>
+            <textarea id="cWhat" name="what" rows="3" placeholder="A chef knife for small hands / an axe for seasoned oak / …"></textarea>
+          </div>
+          <button class="btn btn-primary btn-block" type="submit">Put me in the book</button>
+          <p class="comm-fine mono" id="commFine">Demo form — no message is sent. See the README.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap foot-top">
+    <span class="foot-brand">Quench</span>
+    <nav class="foot-links" aria-label="Footer">
+      <a href="#forge">The forge</a><a href="#tools">The tools</a><a href="#smith">The smith</a><a href="#commission">Commission</a><a href="./guide/">Guide</a>
+    </nav>
+  </div>
+  <div class="wrap foot-bottom mono">
+    <span>© 2026 Quench — a design-showcase concept, not a real forge. Prices, lead times and the ledger are fiction.</span>
+    <span>Designed &amp; built by Parable · <a href="./guide/">How this was built →</a></span>
+  </div>
+</footer>
+
+<script src="./main.js" defer></script>
+</body>
+</html>
